@@ -1,8 +1,12 @@
+#!/usr/bin/env node
+
 // Load modules
 // Create an instance of readline by configuring the readable and the writable streams
 const readline = require('readline');
 // Load module to read file json.
 const fs = require ('fs');
+// Load // Load module to gzip files.
+const zlib = require('zlib');
 
 
 // Creates a interface to read Userinput
@@ -11,11 +15,19 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-console.log("Hola Jonatan");
-console.log("1) Exercise 1 (Level 1)");
-console.log("2) Exercise 2 (Level 1)");
-console.log("3) Exercise 3 (Level 1)");
-console.log("4) Exercise 1 (Level 2)");
+
+let questions = [ 
+        "1) Exercise 1 (Level 1)", 
+        "2) Exercise 2 (Level 1)",
+        "3) Exercise 3 (Level 1)", 
+        "4) Exercise 1 (Level 2)",
+        "0 to Exit."];
+
+console.log("Please choose an exercise: ");
+// print menu options
+questions.map(question => console.log(question));
+
+
 rl.prompt();
 
 rl.on('line', (line) => {
@@ -23,7 +35,7 @@ rl.on('line', (line) => {
     case '0':
         return rl.close();
     case '1':
-        console.log('Exercise 1, level 1!');
+        console.log('Exercise 1, level 1: Creu una funció que imprimeixi recursivamente un missatge per consola amb demores d\'un segon.!');
         /* - Exercici 1
         Creu una funció que imprimeixi recursivament un missatge per consola amb demores d'un segon. 
         */
@@ -41,12 +53,9 @@ rl.on('line', (line) => {
             }
         } 
         recursiveFunction();
-        setTimeout(()=>{
-            console.log("Please, choose another option");
-        }, 5000);
         break;
     case '2':
-        console.log('Exercise 2, level 1!');
+        console.log('Exercise 2, level 1: Creu una funció que, en executar-la, escrigui el seu nom en un fitxer.');
         /* - Exercici 2
         Creu una funció que, en executar-la, escrigui el seu nom en un fitxer. */
 
@@ -54,16 +63,13 @@ rl.on('line', (line) => {
 
             fs.writeFile("./texto.txt", "writeFunctionName", (error)=>{
                 if (error) throw error;
-                console.log("Name was succesfully written");
+                console.log("Name was succesfully written in text file");
             });
         }
         writeFunctionName();
-        setTimeout(()=>{
-            console.log("Please, choose another option");
-        }, 1000);
         break;
     case '3':
-      console.log('Exercise 3, level 1!');
+      console.log('Exercise 3, level 1: Creu una altra que imprimeixi per pantalla el que llegeixi d\'un fitxer.');
       /* - Exercici 3
         Creu una altra que imprimeixi per pantalla el que llegeixi d'un fitxer. */
         const outputFileContent = () => {
@@ -74,12 +80,20 @@ rl.on('line', (line) => {
             });
         }
         outputFileContent();
-        setTimeout(()=>{
-            console.log("Please, choose another option");
-        }, 1000);
         break;
+    case '4':
+        console.log('Exercise 1, level 2: Creu una funció que comprimeixi el file del nivell 1');
+        /* Exercise 1, level 2: Creu una funció que comprimeixi el file del nivell 1 */
+        var zip = zlib.createGzip();
+        var readFile = fs.createReadStream('./texto.txt');
+        var writeFile = fs.createWriteStream('./new.txt.gz');
+        //Transform stream which is zipping the input file
+        readFile.pipe(zip).pipe(writeFile);	
+        console.log("File was succesfully zipped!");				
+        break;
+
     default:
-      console.log(`No such an option. Please, try another number.`);
+      console.log(`No such an exercise. Please, try another number.`);
       break;
   }
   rl.prompt();
