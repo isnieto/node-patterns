@@ -58,6 +58,7 @@ accessDir(inbox)
       readData(file)
         .then(data => {
             writeFile(join(outbox, file), reverseText(data), error => {
+              if (error) return console.log("Error: File could not be saved!");
               console.log(`${file} was successfully saved in the outbox!`);
             });
         })
