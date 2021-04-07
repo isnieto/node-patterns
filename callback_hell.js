@@ -40,15 +40,13 @@ const accessDir = (inbox) => {
         resolve(files);
       });
     });
+  });
 };
 
 const readData = (file)=> {
   return new Promise((resolve, reject) => {
-    readFile(join(inbox, file), "utf8", (error, data) => {
-      if (error) return console.log("Error: File error");
-      resolve(data);
-    });
   });
+});
 }
 
 
