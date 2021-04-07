@@ -54,7 +54,7 @@ class ScoreBoard{
         } else {
             this.winner = "Nobody";
         }
-        console.log(`Game Over. ${this.winner} wins: ${this.firstScore} to ${this.secondScore}}!`)
+        console.log(`Game Over. ${this.winner} wins: ${this.firstScore} to ${this.secondScore}!`)
     }
 } // End Scoreborad
 
@@ -65,17 +65,22 @@ class Game{
         this.firstPlayer = firstPlayer.name;
         this.secondPlayer = secondPlayer.name;
     }
-
+    //Start 
     start(){
-        let counter = 0;
         // Set rounds to play
-        const rounds = +prompt("Let's Play! How many rounds would you like to play? ");
+        const gameTimes = +prompt("Let's Play! How many rounds would you like to play? ");
         // Repeat so often like rounds
+        this.gameInProcess(gameTimes);
+        this.score.getWinner();
+    }// End start method
+    //Gameplay
+    gameInProcess(rounds){
+        let counter = 0;
         while (counter < rounds){
             ++counter;
             // Random a number to be guessed by Players
             let numberToGuess = Math.floor(Math.random() * 3)
-            console.log(`This is the number to guess: ${numberToGuess}`);
+            //console.log(`This is the number to guess: ${numberToGuess}`);
             // Enter Player choices
             let firstChoice = +prompt(`${this.firstPlayer}, please enter a number between 0 and 3: `);
             let secondChoice = +prompt(`${this.secondPlayer}, please enter a number between 0 and 3: `);
@@ -98,8 +103,8 @@ class Game{
                 this.score.showScore();
             }
         } // End While-loop
-        this.score.getWinner();
-    }// End start method
+        
+    }//End gameInProcess
 }
 
 
