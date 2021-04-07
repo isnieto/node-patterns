@@ -17,6 +17,13 @@ class Player{
     }
 }
 
+// Create playerFactory: Factory pattern
+class PlayerFactory{
+    createPlayers(name){
+        return new Player(name);
+    }
+}
+
 let score = null;
 // Create ScoreBoard: singleTon pattern
 class ScoreBoard{
@@ -32,6 +39,13 @@ class ScoreBoard{
             return score;
         }
     }//End constructor
+    
+    // Pull out current score
+    showScore(){
+        console.log(`Current score is: ${this.firstScore} to ${this.secondScore}!\n`);
+    }
+
+    // Check who wins
     getWinner(){
         if (this.firstScore > this.secondScore){
             this.winner = this.playerOne;
@@ -40,9 +54,9 @@ class ScoreBoard{
         } else {
             this.winner = "Nobody";
         }
-        console.log(`Game Over. ${this.winner} wins. ${this.firstScore} to ${this.secondScore}}!`)
+        console.log(`Game Over. ${this.winner} wins: ${this.firstScore} to ${this.secondScore}}!`)
     }
-}
+} // End Scoreborad
 
 // Create  Game: class pattern
 class Game{
@@ -69,28 +83,25 @@ class Game{
             if (firstChoice === numberToGuess && secondChoice !== numberToGuess){
                 console.log(`${this.firstPlayer} wins this round! 100 Points. `)
                 this.score.firstScore += 100;
+                this.score.showScore();
             } else if (firstChoice !== numberToGuess && secondChoice === numberToGuess){
                 console.log(`${this.secondPlayer} wins this round! 100 Points `)
                 this.score.secondScore += 100;
+                this.score.showScore();
             } else if (firstChoice === numberToGuess && secondChoice === numberToGuess){
                 console.log(`Path situation. Both players get 50 Points. `)
                 this.score.firstScore += 50;
                 this.score.secondScore += 50;
+                this.score.showScore();
             } else {
-                console.log(`Nobody wins. Both players get 0 Points. `)
+                console.log(`Nobody wins. Both players get 0 Points. `);
+                this.score.showScore();
             }
         } // End While-loop
-        console.log( this.score.firstScore, this.score.secondScore)
         this.score.getWinner();
     }// End start method
 }
 
-// Create playerFactory: Factory pattern
-class PlayerFactory{
-    createPlayers(name){
-        return new Player(name);
-    }
-}
 
 // class factory declares
 const players = new PlayerFactory();
