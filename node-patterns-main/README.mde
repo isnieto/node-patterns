@@ -1,0 +1,6 @@
+# node-utils
+Iniciar el desenvolupament amb nodejs, incloent les funcionalitats de Javascript
+
+1. node-utils: primeros ejercicios. He añadido un command line Interface(CLI) con un pequeño menu (para ir probando)
+2. callbackhell.js: ejercicio para rehacer el callbackhell utilizando promesas.
+3. SingleTon.js: ejercicio de creación de unjuego muy básico utilizando varios patrones, entre otros el Singleton.(uso de modulo prompt-Sync)
