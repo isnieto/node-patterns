@@ -34,20 +34,23 @@ const reverseText = str =>
 
 // With Promisses
 const accessDir = (inbox) => {
-    return new Promise( (resolve, reject) => {
-      readdir(inbox, (error, files) => {
-        if (error) return reject(new Error("Error: Folder inaccessible"));
-        resolve(files);
-      });
+  return new Promise( (resolve, reject) => {
+    readdir(inbox, (error, files) => {
+      if (error) return reject(new Error("Error: Folder inaccessible"));
+      resolve(files);
     });
   });
 };
 
-const readData = (file)=> {
+const readData = (file) => {
   return new Promise((resolve, reject) => {
+    readFile( join(inbox, file), "utf8", (error, data) =>{
+      if (error) return reject(new Error("Error: File error"));
+      resolve(data);
+    });
   });
-});
-}
+};
+
 
 
 accessDir(inbox)
