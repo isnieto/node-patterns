@@ -52,7 +52,7 @@ function getExercises(choice){
 
                     fs.readFile("./texto.txt",  (error, data)=>{
                         if (error) throw error;
-                        return `Following content was found in the file: ${data}.`;
+                        console.log(`Following content was found in the file: ${data.toString()}.`);
                     });
                 }
                 outputFileContent();
