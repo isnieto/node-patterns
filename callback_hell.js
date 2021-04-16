@@ -42,28 +42,25 @@ const accessDir = (inbox) => {
 const readData = (inbox, file) => {
   return new Promise( (resolve, reject) => {
     readFile( join(inbox, file), "utf8", (error, data) => {
-      if (error){
-        reject(new Error("Error: File error"));
-      } else {
-        //if (data){console.log(data)}
-        resolve(data)
-      }
+      if (error) return console.log("Error: File error");
+      resolve(data)
     });
   });
 };
 
-const writeData =  (data) => {
-    writeFile(join(outbox, file), reverseText(data), error => {
+const writeData =  (outbox, file, data) => {
+     writeFile(join(outbox, file), reverseText(data), error => {
+      if (error) return console.log("Error: File could not be saved!");
       console.log(`${file} was successfully saved in the outbox!`);
-    });
+    }); 
 }
 
 const start = async () => {
   try {
     const files = await accessDir(inbox); 
     files.forEach(file =>{
-      const datos = readData(inbox, file);
-      //await writeData;
+      readData(inbox, file).then(datos => writeData(outbox, file, datos))
+      
       
     })
   } catch (error){
@@ -92,8 +89,6 @@ const readData = (file) => {
     });
   });
 };
-
-
 
 accessDir(inbox)
   .then(files => {
