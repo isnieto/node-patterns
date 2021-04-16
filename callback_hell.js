@@ -60,15 +60,13 @@ const start = async () => {
     const files = await accessDir(inbox); 
     files.forEach(file =>{
       readData(inbox, file).then(datos => writeData(outbox, file, datos))
-      
-      
     })
   } catch (error){
     console.log(error, "!!!!");
   }
-
 } // End accessDir
 
+// Start Function
 start()
 
 // With Promisses
