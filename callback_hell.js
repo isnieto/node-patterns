@@ -9,7 +9,6 @@ const {
 } = require("path");
 
 const inbox = join(__dirname, "inbox");
-console.log(inbox);
 const outbox = join(__dirname, "outbox");
 
 const reverseText = str =>
@@ -31,9 +30,52 @@ const reverseText = str =>
 //     });
 //   });
 // });
+// With AsyncAwait
+const accessDir = (inbox) => {
+  return new Promise( (resolve, reject) => {
+    readdir(inbox, (error, files) => {
+      if (error) return reject(new Error("Error: Folder inaccessible"));
+      resolve(files);
+    });
+  });
+};
+const readData = (inbox, file) => {
+  return new Promise( (resolve, reject) => {
+    readFile( join(inbox, file), "utf8", (error, data) => {
+      if (error){
+        reject(new Error("Error: File error"));
+      } else {
+        //if (data){console.log(data)}
+        resolve(data)
+      }
+    });
+  });
+};
+
+const writeData =  (data) => {
+    writeFile(join(outbox, file), reverseText(data), error => {
+      console.log(`${file} was successfully saved in the outbox!`);
+    });
+}
+
+const start = async () => {
+  try {
+    const files = await accessDir(inbox); 
+    files.forEach(file =>{
+      const datos = readData(inbox, file);
+      //await writeData;
+      
+    })
+  } catch (error){
+    console.log(error, "!!!!");
+  }
+
+} // End accessDir
+
+start()
 
 // With Promisses
-const accessDir = (inbox) => {
+/* const accessDir = (inbox) => {
   return new Promise( (resolve, reject) => {
     readdir(inbox, (error, files) => {
       if (error) return reject(new Error("Error: Folder inaccessible"));
@@ -65,7 +107,9 @@ accessDir(inbox)
         })
     })
   }) 
-  .catch(Error);
+  .catch(error); */
+
+  
     
       
     
