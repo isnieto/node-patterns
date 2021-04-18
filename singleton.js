@@ -24,22 +24,23 @@ class PlayerFactory{
     }
 }
 
-let score = null;
 // Create ScoreBoard: singleTon pattern
 class ScoreBoard{
     constructor(playerOne, playerTwo, winner) {
-        if (!score) {
             this.playerOne = playerOne.name;
             this.playerTwo = playerTwo.name;
             this.firstScore = playerOne.score;
             this.secondScore = playerTwo.score;
             this.winner = winner;
-            score =  this;
-        } else {
-            return score;
-        }
     }//End constructor
     
+    // return instance
+    static getInstance(playerOne, playerTwo, winner){
+        if (!this._instance) {
+            this._instance = new ScoreBoard(playerOne, playerTwo, winner);
+        } 
+        return this._instance;
+    }
     // Pull out current score
     showScore(){
         console.log(`Current score is: ${this.firstScore} to ${this.secondScore}!\n`);
@@ -119,7 +120,7 @@ const namePlayer2 = prompt('Name of second player: ');
 const player2 = players.createPlayers(namePlayer2);
 
 //Starts game
-const scoreGame = new ScoreBoard(player1, player2, "pending");
+const scoreGame = ScoreBoard.getInstance(player1, player2, "pending");
 const newGame = new Game(scoreGame, player1, player2)
 
 
